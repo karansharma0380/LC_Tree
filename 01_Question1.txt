@@ -1,0 +1,89 @@
+Tree contruction: 
+
+GIVEN ARRAY:-
+Integer[] arr= {50, 25,12,null, null,37,30,null,null,null,75,62,null,70,null,null,87,null,null};
+
+O/P:
+       50 
+    25     75  
+ 12   37 62   87 
+    30     70 
+
+
+Ans:
+use stack to solve this
+
+public class TreePractice {
+	
+	public static class Node{ 		// Tree's Node class
+		int data;
+		Node right;
+		Node left;
+		
+		Node(int data,Node left,Node right){
+			this.data=data;
+			this.right=right;
+			this.left=left;
+			
+		}
+		
+	}
+
+
+	static class Pair{	// Pair class to be pushe inside the stack
+		Node node;
+		int state;
+		
+		Pair(Node node, int state){
+			this.node = node;
+			this.state = state;
+			
+		}
+	}
+
+	public static void main(String[] args) {
+		Integer[] arr= {50, 25,12,null, null,37,30,null,null,null,75,62,null,70,null,null,87,null,null};
+		
+		Node root = new Node(arr[0],null,null);
+		Pair pair = new Pair(root,1);
+		
+		Stack<Pair> stck = new Stack<>();
+		stck.push(pair);
+		
+		int idx = 0;
+		while(stck.size()>0){
+			Pair p = stck.peek();
+			if(p.state==1){
+				idx++;
+				if(arr[idx]!=null){
+					Node temp = new Node(arr[idx],null,null);
+					p.node.left=temp;
+					stck.push(new Pair(temp,1));
+				}
+				else{
+					p.node.left=null;
+				}
+				p.state++;
+			}
+			else if(p.state==2){
+				idx++;
+				if(arr[idx]!=null){
+					Node temp = new Node(arr[idx],null,null);
+					p.node.right=temp;
+					stck.push(new Pair(temp,1));
+				}
+				else{
+					p.node.right=null;
+				}
+				p.state++;
+			}
+			else{
+				stck.pop();
+			}
+		}
+		
+		
+		System.out.println(root);
+	}
+// You can use the "root" node to print the whole tree. 
+}
