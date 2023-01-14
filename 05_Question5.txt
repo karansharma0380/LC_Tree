@@ -1,0 +1,53 @@
+Ques:- Print k level down
+
+
+       50                    level 0 or 1 depends on question
+    25     75                level 1
+ 12   37 62   87             level 2
+    30     70                level 3
+
+Two ways to solve this
+
+Soln:
+ 1) 
+  static void kleveldown(Node node, int k){
+		if(node==null || k<0){
+			return;
+		}
+		
+		if(k==0){
+			System.out.print(node.data+" ");
+		}
+		
+		kleveldown(node.left,k-1);
+		kleveldown(node.right,k-1);
+	}
+
+2) Using the levelorder traversal
+
+public static void levelOrder(Node node, int k){
+		if(node==null){
+			return;
+		}
+		Queue<Node> queue = new ArrayDeque<>();
+		queue.add(node);
+		
+		while(queue.size()>0 && k>=0){
+			int count = queue.size();
+			for(int i=0;i<count;i++){
+				Node p = queue.remove();
+				if(k==0){
+					System.out.print(p.data+" ");
+				}
+				
+				if(p.left!=null){
+					queue.add(p.left);
+				}
+				if(p.right!=null){
+					queue.add(p.right);
+				}
+			}
+			k--;
+			System.out.println();
+		}
+

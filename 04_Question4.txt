@@ -1,0 +1,31 @@
+Node to root path aka root to node path
+Below program also given true/false about whether a program is present or not. 
+
+static ArrayList<Integer> path;
+	static boolean findNode(Node node, int x, ArrayList<Integer> path){
+		if(node==null){
+			return false;
+		}
+		
+		if(node.data==x){
+			path.add(node.data);
+			return true;
+		}
+		boolean la = findNode(node.left,x,path);
+		if(la){
+			path.add(node.data);
+			return true;
+		}
+		boolean ra = findNode(node.right,x,path);
+		if(ra){
+			path.add(node.data);
+			return true;
+		}
+		return false;
+	}
+
+/////////// Inside path
+path = new ArrayList<>();
+boolean ans = findNode(root,x,path);
+
+System.out.println(path);

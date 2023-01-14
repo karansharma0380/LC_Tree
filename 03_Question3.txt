@@ -1,1 +1,90 @@
 Iterative PreOrder, PostOrder, Inorder
+
+Idea behind this:
+we will use the Pair(node,state) technique here, we get a node in the function so will make a pair of it with state 1.
+we will make three empty strings pre="" in="" post="" and a stack<pair> whihc will keep our pairs.
+now we will initilaze a while loop which will run till the stck is not empty.
+Inside the loop we will check the coditions like
+
+pair p = stck.peek();
+if state==1 means euler is in preorder phase so add it to pre string and p.state++.
+if state==2 means euler is in inorder phase so add it  to in string and p.state++.
+if state==3 means euler is in postorder phase so add it post string and pop the top element. 
+
+Afterwards print the pre, in, post.
+ 
+Note: Do make the whole tree euler also for revision
+
+public class TreePractice {
+	
+	public static class Node{  // Just to tell the node structure
+		int data;
+		Node right;
+		Node left;
+		
+		Node(int data,Node left,Node right){
+			this.data=data;
+			this.right=right;
+			this.left=left;
+			
+		}
+		
+	}
+	static class Pair{
+		Node node;
+		int state;
+		
+		Pair(Node node, int state){
+			this.node = node;
+			this.state = state;
+			
+		}
+	}
+	
+	public static void IterativePrePostIn(Node node){
+		Pair p = new Pair(node,1);
+		Stack<Pair> stck = new Stack<>();
+		stck.add(p);
+		
+		String pre = "";
+		String post = "";
+		String inor = "";
+		
+		while(stck.size()>0){
+			Pair top = stck.peek();
+			if(top.state==1){
+				pre+=top.node.data + " ";
+				top.state++;
+				
+				if(top.node.left!=null){
+					Pair lp = new Pair(top.node.left,1);
+					stck.push(lp);
+				}
+			}
+			else if(top.state==2){
+				inor+=top.node.data+" ";
+				top.state++;
+				
+				if(top.node.right!=null){
+					Pair rp = new Pair(top.node.right,1);
+					stck.push(rp);
+				}
+			}
+			else{
+				post+=top.node.data+" ";
+				stck.pop();
+			}
+			
+		}
+		System.out.println();
+		
+		System.out.println(pre);
+		System.out.println(inor);
+		System.out.println(post);
+			
+	}
+
+
+}
+
+
