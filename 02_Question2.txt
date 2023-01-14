@@ -1,0 +1,54 @@
+Size, Sum, Max and Height of Binary Tree
+
+Size
+
+public static int btsize(Node node){
+		if(node==null){
+			return 0;
+		}
+		
+		int la = btsize(node.left);
+		int ra = btsize(node.right);
+		
+		return la+ra+1;
+	}
+
+Sum
+
+public static int btsum(Node node){
+		if(node==null){
+			return 0;
+		}
+		
+		int ls = btsum(node.left);
+		int rs = btsum(node.right);
+		
+		return ls+rs+node.data;
+	}
+
+Max
+
+public static int btmax(Node node){
+		if(node==null){
+			return Integer.MIN_VALUE;
+		}
+		
+		int lm = btmax(node.left);
+		int rm = btmax(node.right);
+		
+		return Math.max(node.data,Math.max(lm,rm));
+	}
+
+Height
+
+public static int btheight(Node node){
+		if(node==null){
+			return 0/-1;         0 -> nodes height
+					    -1 -> edges height
+		}
+		
+		int lh = btheight(node.left);
+		int rh = btheight(node.right);
+		
+		return 1+Math.max(lh,rh);
+	}
