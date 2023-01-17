@@ -1,0 +1,28 @@
+Question: Print all those paths[root to leafs] whose sum is greater than or equal to a low and less than or equal to a 
+          high[low and high is given already].
+	 Means get those path[root2leafnode] whose sum is within a mentioned range.
+	       50 
+    	   25     75  
+        12   37 62   87 
+           30     70 
+
+Solution:  
+
+Idea:
+	Euler will start from 50 then when the euler reach 25 i.e. firt call to left then in the path&sum 50 is added.
+	When the euler reach 12 then 25 is added to the path&sum. 
+
+static void node2Root(Node node, String path,int sum, int lo, int high){
+		if(node==null){
+			return;
+		}
+		if(node.left==null && node.right==null){
+			sum=sum+node.data;
+			if(sum>=lo && sum<=high){
+				System.out.println(path+" "+node.data);
+			}
+			return;
+		}
+		node2Root(node.left, path+" "+node.data,sum+node.data,lo,high);
+		node2Root(node.right, path+" "+node.data,sum+node.data,lo,high);
+	}    		

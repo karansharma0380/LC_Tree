@@ -1,0 +1,119 @@
+Given a tree, find the largest tree/subtree that is a BST.
+Given a tree, return the size of the largest tree/subtree that is a BST.
+
+Solution:
+
+This is problem requires knowledge of isBST program. 
+i.e   node >= all nodes on the left side
+      node <= all nodes on the right side 
+	This property should be true for all nodes of the bst
+
+e.g.                  /     50
+		     /    /    \
+		    /   25      75      Here, 50 >= all the nodes in the left subtree
+		   /  / _ \    /   \	      50 <= all the nodes in the right subtree
+		  / 12 / \ 37  62    87
+		 /----/   \-->
+In this euler will run in post order ->  12 , 37, 25, 62, 87, 50.
+
+Idea 
+(i) if a node>= maximum of left subtree and <= minimum of right subtree then that node is a bst [nbst- node bst]
+		eg. 25>=12 && 12<=37 so node 12 is a node bst
+(ii) We also have to check TreeBST property i.e It should be nbst first then left subtree should also be a BST and
+		right subtree should also be a bst. eg. 25 is a nbst and its left subtree& right subtree is also a BST.
+		12 and 37 both are bst.
+When both the conditions are fulfilled then the tree is bst. Here tree with root 25 is a valid bst.
+Once we get to know that 25 is a bst then we have to calculate its max and min which will be used by his parent node.
+So, for 25 -> min = min(25, min(12's min,37's min))
+           -> max = max(25, max(12's max, 37' max))
+That's why we need to calculate every node's min and max. 
+
+Code :
+
+public static class BSTPair{
+		boolean isBST;
+		int min;
+		int max;
+	}
+
+public static BSTPair isBST(Node root){
+		if(root==null){
+			BSTPair bp= new BSTPair(); 
+			bp.isBST=true; // true 
+			bp.min=Integer.MAX_VALUE; // Identity Value
+			bp.max=Integer.MIN_VALUE; // Identity Value
+			return bp;
+		}
+		
+		BSTPair lp = isBST(root.left);
+		BSTPair rp = isBST(root.right);
+		
+		BSTPair mp = new BSTPair();
+		mp.isBST = lp.isBST  && rp.isBST && // tree bst condition
+			   (root.data>=lp.max && root.data<=rp.min);//node bst condition
+		mp.min = Math.min(root.data,Math.min(lp.min,rp.min )); // current node's min i.e min val in whole tree with root as "node"
+		mp.max = Math.max(root.data,Math.max(lp.max,rp.max)); // current node's max i.e max val in whole tree with root as "node"
+		
+		return mp;
+	}
+
+BSTPair ans  = isBST(node);
+ans.isBST --> true/false;
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+So, To solve this question we will use this code and make some minor changes to it.
+
+public static class BSTPair{
+		boolean isBST;
+		int min;
+		int max;
+		Node lbstroot; // largest bst root node
+		int lbstsize; // largest bst's size
+	}
+
+public static BSTPair isBST(Node root){
+		if(root==null){
+			BSTPair bp= new BSTPair(); 
+			bp.isBST=true;
+			bp.min=Integer.MAX_VALUE;
+			bp.max=Integer.MIN_VALUE;
+			bp.lbstroot = null;
+			bp.lbstsize = 0;
+			return bp;
+		}
+		
+		BSTPair lp = isBST(root.left);
+		BSTPair rp = isBST(root.right);
+		
+		BSTPair mp = new BSTPair();
+		mp.isBST = lp.isBST  && rp.isBST && 
+					(root.data>=lp.max && root.data<=rp.min);
+		mp.min = Math.min(root.data,Math.min(lp.min,rp.min ));
+		mp.max = Math.max(root.data,Math.max(lp.max,rp.max));
+		
+	// This block of code is extra here.  So lets see what happening here. 
+	   //if the node is nbst, Tbst then that node is root node for the largest BST 
+		if(mp.isBST){
+			mp.lbstroot=root;
+			mp.lbstsize=lp.lbstsize+rp.lbstsize+1;
+		}// if not then for that node we will give size and root node of the bst from left and right side
+		else if(lp.lbstsize>rp.lbstsize){
+			mp.lbstroot=lp.lbstroot;
+			mp.lbstsize=lp.lbstsize;
+		}
+		else{
+			mp.lbstroot=rp.lbstroot;
+			mp.lbstsize=rp.lbstsize;;
+		}
+		
+		return mp;
+	}
+
+
+
+
+
+
+ 
+
+ 

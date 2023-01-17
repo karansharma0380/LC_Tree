@@ -1,0 +1,26 @@
+Ques: Transform back from a left cloned tree. 
+		
+		a                           a
+	     a     c			  b   c
+	   b     c         =====>         
+	 b
+
+Solution: 
+ Idea: Assume that the node.left.left and node.right will correct it automatically. 
+        In post order 
+        We will connect node.left to lnn and so on...
+
+		
+	pubic static Node transBackfromLeftClone(Node node){
+		if(node ==null){
+			return null;
+		}
+
+		Node lnn = transBackfromLeftClone(node.left.left);
+		Node rnn = transBackfromLeftClone(node.right);
+
+		node.left = lnn;
+		node.right = rnn;
+
+		retrun node;	
+	}

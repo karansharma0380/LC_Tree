@@ -1,0 +1,25 @@
+Question: Print all the single child nodes
+       50 
+    25     75 			==> 30 70 
+ 12   37 62   87 
+    30     70 
+
+Solution: 
+Idea: kisi bhi node pe ja kr uske parent ko check karenge ki uska ek hi child hai ki nhi
+		agar ek hi child hai then uss child ko print kr denge
+
+	public static void singleChild(Node node, Node parent){
+		if(node==null){
+			return;
+		}
+		
+		if(parent!=null && parent.left==node && parent.right==null){
+			System.out.println(node.data);
+		}
+		else if(parent!=null && parent.left==null && parent.right==node){
+			System.out.println(node.data);
+		}
+
+		singleChild(node.left, node);
+		singleChild(node.right, node);
+	}

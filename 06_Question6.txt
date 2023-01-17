@@ -1,0 +1,69 @@
+Ques:- Print k level far
+
+        50 
+    25      75  
+ 12   37  62   87 
+    30     70 
+
+Suppose we want 2 level away nodes from the 37 
+o/p:  12, 50
+
+Concepts use:
+KLevelDown, node2root path
+						0   1    2
+Idea: First of all, we will get node2root path [37, 25, 50] [this is node array not int array] then we will apply 
+  KLevelDown on everylement but k changes       k   k-1 k-2
+   if k=2 acc to our question  then             2   1    0   if array is more big the k can be -ve also but this case is
+							      handled by our kleveldown program. 
+ 
+  KLevelDown can at 25 can also print 37 coz 1 level down 25 there is 12 and 37 both so we have to block this.
+  so we will tweek kleveldown with a blocker node. blocker node is node before the current node
+  if node is at 0th loc then null otherwise we have to block the prev node in array.
+			-> i==0?null:path.get(i-1) this is blocker thing
+					   	
+
+Solution:
+
+static ArrayList<Node> path;
+	static boolean node2root(Node node, int x,ArrayList<Node> path){
+		if(node==null){
+			return false;
+		}
+		
+		if(node.data==x){
+			path.add(node);
+			return true;
+		}
+		boolean ls = node2root(node.left, x,path);
+		if(ls){
+			path.add(node);
+			return true;
+		}
+		boolean rs = node2root(node.right,x,path);
+		if(rs){
+			path.add(node);
+			return true;
+		}
+		return false;
+	}
+	static void kleveldown(Node node, int k, Node blocker){
+		if(node==null || k<0 || node ==blocker){
+			return;
+		}
+		
+		if(k==0){
+			System.out.print(node.data+" ");
+		}
+		
+		kleveldown(node.left,k-1,blocker);
+		kleveldown(node.right,k-1,blocker);
+	}
+	
+	static void kLevelFar(Node node, int x, int k){
+		path = new ArrayList<>();
+		boolean ans  = node2root(node,x,path);
+		
+		for(int i=0;i<path.size();i++){
+			kleveldown(path.get(i),k-i,i==0?null:path.get(i-1));
+		}
+	}

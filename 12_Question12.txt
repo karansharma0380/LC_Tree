@@ -1,0 +1,100 @@
+Ques: Diameter of a Binary Tree. 
+
+           50 
+       25     75  
+    12   37 62   87 
+       30     70 
+
+Diameter:- Maximum number of edges between two nodes. In context of the above question, diameter is 6 i.e. from 30 - 70.
+
+Explanantion: So we can do this by using lh - max distance between left child and a node on left side.[left height]
+					 rh - max distance between right child and a node on right side.[right height]
+at last lh+rh+2[two edge- from root to left child(1) and from root to right child(1)]
+
+But there is a problem. 
+
+Diameter need not to be passed from the root. it can be present anywhere in the left or right subtree also.
+
+The correct solution is that there are  3 factor to solve this question. 
+	1) lh+rh+2 [left child height + right child height + 2(two edge from root to its child)] 
+	2) ld [max dist between two nodes on the LH subtree]
+	3) rd [max dist between two nodes on the RH subtree]
+
+The maximum between all of these three will be the ans.
+
+             
+Solution: 
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!First approach!!!!!!!!!!!!!!!!!!!!!!!!!!!!   [Not efficient]
+							In the post order of every node we are calculating the height 
+								and height func is itself O(n), we are doing it for every 
+							node. Hence, TC is O(n^2). 
+static int heightT(Node node){
+		if(node == null){
+			return -1;
+		}
+		
+		int ls = heightT(node.left);
+		int rs = heightT(node.right);
+		int fi = Math.max(ls,rs)+1;
+		
+		return fi;
+	}
+	
+	public static int diameterTree(Node node){
+		if(node==null){
+			return 0;
+		}
+		int ld = diameterTree(node.left);
+		int rd = diameterTree(node.right);
+		int f = heightT(node.left) + heightT(node.right)+ 2;
+		
+		return Math.max(f,Math.max(rd, ld));
+		
+	}
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Second Approach!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+			In this approach we are doing two recursions together at once. so tc is O(n)
+	Travel and change strategy it is returning something else and we need something else
+
+static class DiaPair{
+		int ht;
+		int dia;
+	}
+	
+	public static DiaPair diaTree(Node node){
+		if(node==null){
+			DiaPair bp = new DiaPair();
+			bp.ht=-1;
+			bp.dia=0;
+			return bp;
+		}
+		
+		DiaPair ls = diaTree(node.left);
+		DiaPair rs = diaTree(node.right);
+		
+		DiaPair mp = new DiaPair();
+		mp.ht = Math.max(ls.ht,rs.ht)+1;
+
+
+		int fs = ls.ht+rs.ht+2;
+		mp.dia = Math.max(Math.max(rs.ht, ls.ht),fs);
+		
+		return mp;
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

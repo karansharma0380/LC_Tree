@@ -1,0 +1,41 @@
+Question: Given a binary tree, return the tilt of the whole tree. The tilt of a tree node is defined as the absolute 
+	difference between the sum of all left subtree node values and the sum of all right subtree node values. Null
+	 nodes are assigned tilt to be zero. Therefore, tilt of the whole tree is defined as the sum of all nodes’
+	 tilt.
+
+    4
+   / \
+  2   9
+ / \   \
+3   5   7
+
+Output : 15
+Explanation:Tilt of node 3 : 0
+            Tilt of node 5 : 0
+            Tilt of node 7 : 0
+            Tilt of node 2 : |3-5| = 2
+            Tilt of node 9 : |0-7| = 7
+            Tilt of node 4 : |(3+5+2)-(9+7)| = 6
+            Tilt of binary tree : 0 + 0 + 0 + 2 + 7 + 6 = 15
+
+
+Solution: 
+
+We will use travel and solve strategy i.e. func will return suppose a but b is also solving. 
+
+	static int tilt = 0;
+	public static int tiltT(Node node){
+		if(node==null){
+			return 0;
+		}
+		
+		int ls = tiltT(node.left);
+		int rs = tiltT(node.right);
+		
+		int temptilt = Math.abs(ls-rs);
+		tilt+=temptilt;
+		
+		return ls+rs+node.data;
+		
+		
+	}

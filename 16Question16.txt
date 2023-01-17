@@ -1,0 +1,7 @@
+Question: Threaded Binary Tree
+Idea: Inorder traversal of a Binary tree can either be done using recursion or with the use of a auxiliary stack.
+      The idea of threaded binary trees is to make inorder traversal faster and do it without stack and without 
+      recursion. A binary tree is made threaded by making all right child pointers that would normally be NULL point 
+      to the inorder successor of the node (if it exists).
+
+Solution

@@ -1,0 +1,28 @@
+A height balanced binary tree is a binary tree in which the height of the left subtree and right subtree of any 
+node does not differ by more than 1 and both the left and right subtree are also height balanced.
+ 			| lsth - rsth | <=1
+
+
+Solution: 
+ 
+We will use the travel and solve technique here
+
+
+static boolean isBalanced = true;
+public static int isBalan(Node node){
+	if(node==null){
+		return 0; //height node wali cosnider kr rhe hai
+	}
+
+	int lh = isBalan(node.left);
+	int rh = isBalan(node.right);
+
+	int gap = Math.abs(lh-rh);
+	if(gap>1){
+		isBalanced=false;
+	}
+	return Math.max(lh,rh)+1;
+
+
+
+}

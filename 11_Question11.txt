@@ -1,0 +1,25 @@
+Question : Remove the leafs of the binary tree. 
+       
+
+Solution:  
+
+Pretty simple
+
+
+ 	public static Node removeLeaves(Node node){
+		if(node ==null){
+			return null;
+		}
+
+		if(node.right==null && node.left==null){
+			return null;
+		}
+	
+		Node ln = removeLeaves(node.left);
+		Node rn = removeLeaves(node.right);
+	
+		node.left=ln;
+		node.right=rn;
+
+		return node;
+	}
