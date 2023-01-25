@@ -4,4 +4,9 @@ Idea: Inorder traversal of a Binary tree can either be done using recursion or w
       recursion. A binary tree is made threaded by making all right child pointers that would normally be NULL point 
       to the inorder successor of the node (if it exists).
 
-Solution
+Note: This is used for the Inorder Morris Traversal
+
+Solution: 
+
+
+You are standing at the root of the binary tree. 
