@@ -1,0 +1,59 @@
+Question: Threaded Binary Tree
+Idea: Inorder traversal of a Binary tree can either be done using recursion or with the use of a auxiliary stack.
+      The idea of threaded binary trees is to make inorder traversal faster and do it without stack and without 
+      recursion. A binary tree is made threaded by making all right child pointers that would normally be NULL point 
+      to the inorder successor of the node (if it exists).
+
+Note: This is used for the Inorder Morris Traversal
+
+Solution: 
+
+You are standing at the root of the binary tree.
+	You will get the left node and check whether it is null or not
+		if yes then print yourself and move to right. Just think what we do in inorder traversal we move to the
+		  right only when our left subtree is prcossed. We move to right after printing the current element.
+		if not null then get the rightmost node in the subtree
+			then we check whether rightmostNode is null or not.
+				if it is null then connect it to curr node
+				otherwise [means rightmostNode is connected to the curr node]
+				then breakdown the thread. print the curr_ nodeand move to the right side
+			
+
+
+public static Node getRightMostNode(Node leftNode,Node curr){
+		while(leftNode.right!=null && leftNode.right!=curr){
+			leftNode = leftNode.right;
+		}
+		
+		return leftNode;
+	}
+	public static ArrayList<Integer> inMorris(Node node){
+		ArrayList<Integer> ans = new ArrayList<>();
+		Node curr=node;
+		
+		while(curr!=null){
+			Node LeftNode = curr.left;
+			
+			if(LeftNode==null){
+				ans.add(curr.data);
+				curr=curr.right;
+			}
+			else{
+				Node rightmostNode = getRightMostNode(LeftNode,curr);
+				
+				if(rightmostNode.right==null){ //thread creation
+					rightmostNode.right=curr;
+					curr=curr.left;
+				}
+				else{
+					rightmostNode.right=null; //thread breakdown
+					ans.add(curr.data);
+					curr=curr.right;
+				}
+			}
+			
+		}
+		
+		
+		return ans;
+	}

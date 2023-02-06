@@ -1,0 +1,56 @@
+LC: HouseRobber3
+Question: The thief has found himself a new place for his thievery again. There is only one entrance to this area, 
+	  called root.
+          Besides the root, each house has one and only one parent house. After a tour, the smart thief realized that 
+	  all houses in this place form a binary tree. It will automatically contact the police if two directly-linked
+          houses were broken into on the same night.
+          Given the root of the binary tree, return the maximum amount of money the thief can rob without alerting the
+	  police.
+
+                                             3*
+					  /     \
+                                        2         3
+				          \         \ 
+					   3*        1*
+    Note: This may appear the we are stealing from alternate nodes but that is not the case
+
+Solution:   Work will happen in post order. 
+     
+Consider this tree below
+
+  				a
+			      /   \
+                             b     c
+                           /   \  /  \
+                          ^     ^ ^   ^          ^ -> //Write explanantion
+class housePair{
+    int withRobbing=0;
+    int withoutRobbing=0;
+}
+
+
+class Solution {
+    
+    public housePair rob_util(TreeNode root){
+        if(root==null){
+            return new housePair();
+        }
+        
+        housePair lchild = rob_util(root.left);
+        housePair rchild = rob_util(root.right);
+        
+        housePair myans = new housePair();
+        
+        myans.withRobbing = lchild.withoutRobbing + rchild.withoutRobbing+ root.val;
+        
+        myans.withoutRobbing = Math.max(lchild.withoutRobbing ,lchild.withRobbing)+Math.max(rchild.withRobbing,rchild.withoutRobbing);
+        
+        return myans;
+    }
+    public int rob(TreeNode root) {
+        
+        housePair res = rob_util(root);
+        
+        return Math.max(res.withRobbing,res.withoutRobbing);
+    }
+}

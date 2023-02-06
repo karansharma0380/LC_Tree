@@ -1,0 +1,43 @@
+PreOrder Morris Traversal[PreOrder Traversal without extra space]
+
+Solution: 
+
+
+public static Node getRightMostNode(Node leftNode,Node curr){
+		while(leftNode.right!=null && leftNode.right!=curr){
+			leftNode = leftNode.right;
+		}
+		
+		return leftNode;
+	}
+	public static ArrayList<Integer> inMorris(Node node){
+		ArrayList<Integer> ans = new ArrayList<>();
+		Node curr=node;
+		
+		while(curr!=null){
+			Node LeftNode = curr.left;
+			
+			if(LeftNode==null){
+				ans.add(curr.data);
+				curr=curr.right;
+			}
+			else{
+				Node rightmostNode = getRightMostNode(LeftNode,curr);
+				
+				if(rightmostNode.right==null){
+					ans.add(curr.data);
+					rightmostNode.right=curr;
+					curr=curr.left;
+				}
+				else{
+					rightmostNode.right=null;
+					curr=curr.right;
+				}
+			}
+			
+		}
+		
+		
+		return ans;
+	}
+	

@@ -1,0 +1,43 @@
+Question: You are given the root of a binary tree. We install cameras on the tree nodes where each camera at a node
+ can monitor its parent, itself, and its immediate children.
+
+Return the minimum number of cameras needed to monitor all nodes of the tree.
+
+Solution: 
+
+
+class Solution {
+     int cameras=0;
+    private int minCameraCover_(TreeNode root){
+   	//-1 -> camera needed (node asks it's parent to cover it)
+        // 1 -> camera not needed (node says its covered)
+        // 0 -> node has been covered (returns status to parent that it has a camera and is already covered)
+        if(root==null){
+            return 1;//null nodes are already covered
+        }
+        int lchild = minCameraCover_(root.left);
+        int rchild = minCameraCover_(root.right);
+        
+	//check if either of the left or right is not covered and needs camera -> increment camera count
+        if(lchild ==-1 || rchild==-1){
+            cameras++;
+            return 0; //return 0 -> this node is now covered
+        }
+        if(lchild==0 || rchild==0){   // check if either the nodes are covered return 1
+            return 1;
+        }
+        
+        return -1;  //else ask the parent to handle since its not covered
+    }
+     
+     public int minCameraCover(TreeNode root) {
+        
+         if(minCameraCover_(root)==-1){ ////if root is the single element in the tree it requires a camera to be 
+						covered -> increment the camera count
+             cameras++;
+         }
+         return cameras;
+     }
+}
+
+
