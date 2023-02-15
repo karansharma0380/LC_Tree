@@ -1,0 +1,111 @@
+Question: 
+
+Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder
+traversal of the same tree, construct and return the binary tree.
+
+Solution:
+                                         0
+				       /   \
+             			     1       2    
+input array:
+Pre:: [0,1,3,7,8,4,9,10,2,5,11,6]
+In:: [7,3,8,1,9,4,10,0,11,5,2,6]
+      0,1,2,3,4,5,_6,7,8,9,10,11
+
+Idea:: pre[0] which is 0 will be the root of the tree, and from the tree we can say that the in in[] all
+       the elements before 0 will be on the left subtree and after 0 they will be on the right subtree.
+	We will consider 4 variables -> psi[pre starting idx], pei[p ending idx],  
+					isi[in starting idx], iei[in ending idx].
+        
+       Note:-
+       Formula for the elements selection in an array, Suppose we are considering two elements in the array
+	say 'a' and 'b'. 
+       [a-b] ->  b-a+1 when we want both the elements in our count.
+       [a-b) ->  b-a when we want a but the b or vice versa
+       (a-b) -> b-a-1 None included, only the elements between these are. 
+      
+        Getting back to the idea,
+	From the pre-array, we got to know the root element now we will count the elements before 0[root ele]
+	in inorder array so that we can determine how many elements we have in left subtree and right subtree
+	using the 4 variables.
+	
+	int psi=0,pei=pre.lenth-1,isi=0,iei=in.length-1;
+	int idx=0;
+	int count_of_ele_leftstree =0;
+	while(in[idx]!=pre[psi]){
+		idx++;
+	}
+	count_of_ele_leftstree=idx-isi; //No.of elemnts in lftsubtree.
+	
+	Manipulate the 4 variables above for the ranges of the elements in the left and the right subtree.
+	leftsubtree[pre] = psi+1, psi+count_of_ele_leftstree [Range in pre[] array]
+	leftsubtree[in] = isi, idx-1 [Range in in[] array]
+	rightsubtree[pre] = psi+count_of_ele_leftstree+1, pei
+	rightsubtree[in] = idx+1,iei
+
+						(0,11)|(0,11) [pre and in rnages originial]
+					/			\
+				      ()
+
+
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int n = preorder.length;
+
+        return buildTree1(preorder,0,n-1,inorder,0,n-1);
+    }
+    public TreeNode buildTree1(int[] preorder,int psi,int pei, int[] inorder, int isi, int iei){
+        if(isi>iei){
+            return null;
+        }
+
+        int idx=0;
+        while(inorder[idx]!=preorder[psi]){
+            idx++;
+        }
+        int colse = idx-isi;
+
+        TreeNode node = new TreeNode(preorder[psi]);
+
+        node.left = buildTree1(preorder,psi+1,psi+colse,inorder,isi,idx-1);
+        node.right = buildTree1(preorder,psi+colse+1,pei,inorder,idx+1,iei);
+
+        return node;
+
+
+    }
+}
+
+	
+
+
+	
+	
+	
+	
+	
+
+
+	
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,65 @@
+Leetcode 98
+
+Question: Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+A valid BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+
+Solution:
+
+Note: One idea is that Inorder of a BST is a sorted sequence. And if it is not a sorted sequence then it is not BST.
+
+Solution1: We can store the inorder into an array and then check whether the array is sorted or not we do this by using two pointers prev and curr,
+	prev=null and curr points to first element of the array then iterate through it but this solution takes O(N) is space. 
+
+Solution2: We will make a prev pointer which will points to a null then we will run normal in-order traversal, then in the inorder we will 
+            check whether elements in the tree are in sorted order or not[Just like how we check in an array].
+
+class Solution {
+   
+   public long prev = Long.MIN_VALUE; //Very Important even though value in node is int we are using long. 
+    
+    public boolean isValidBST(TreeNode root) {
+        
+        if(root==null) return true;
+        boolean l = isValidBST(root.left);
+        if(l==false){
+            return false;
+        }
+        if(prev>=root.val) return false;
+        prev = root.val;
+        boolean r = isValidBST(root.right);
+        if(r==false){
+            return false;
+        }
+        return true;
+        
+    }
+}
+
+Solution3: Using Morris Traversal[inorder] to achive same result with less space.
+
+class Solution{
+	
+	void morrisTraversal(TreeNode node){
+		TreeNode curr=node;
+		TreeNode leftNode = curr.left;
+
+		while(curr!=null){
+			TreeNode rightmostNode = getRightMostNode(ln,curr);
+			
+			if(rightmostNode.right==null){
+				
+			}
+			else{
+
+			}
+		}
+	
+	}
+
+
+}

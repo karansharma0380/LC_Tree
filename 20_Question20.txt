@@ -11,5 +11,59 @@ Repeat the second and third steps until you can't move in the tree.
 Zigzag length is defined as the number of nodes visited - 1. (A single node has a length of 0).
 
 Return the longest ZigZag path contained in that tree.
+
+
+
+Solution:
+
+Terminologies to be known
+                                    Node
+				  /      \
+		forward slope    /        \  backward slope
+
+
+Consider this tree
+    
+                                 a
+			       /   \
+                             b       c
+                           /   \   /   \
+                          ^     ^ ^     ^
+
+If we are at the node 'a' and we want zig zag path [leave question]
+
+
+   
+
+class Solution {
+    static class Pair{
+        int forwardslop=-1;
+        int backwwardslop=-1;
+        int maxLen = -1;
+    }
+    
+    public Pair zigzag_util(TreeNode root){
+        if(root==null){
+            return new Pair();
+        }
+        
+        Pair lchild = zigzag_util(root.left);
+        Pair rchild = zigzag_util(root.right);
+        
+        Pair myans = new Pair();
+        
+        myans.maxLen = Math.max(Math.max(lchild.maxLen,rchild.maxLen),Math.max(lchild.backwwardslop, rchild.forwardslop)+1);
+        
+        myans.forwardslop = lchild.backwwardslop+1;
+        myans.backwwardslop = rchild.forwardslop+1;
+        
+        return myans;
+    }
+    public int longestZigZag(TreeNode root) {
+        Pair ans = zigzag_util(root);
+        
+        return ans.maxLen;
+    }
+}
    
    
