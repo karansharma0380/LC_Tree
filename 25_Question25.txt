@@ -1,0 +1,60 @@
+Question: Given inorder and level-order traversals of a Binary Tree, construct the Binary Tree.
+		
+
+
+Solution:
+
+
+class Solution{
+
+	public TreeNode buildTree1(int[] inorder,int isi, int iei, int[] levelorder){
+		if(iei>isi){
+			return null;
+		}
+		
+		TreeNode root = new TreeNode(levelorder[0]);
+		if(levelorder.length==1){
+			return root;
+		}
+
+		int idx=isi;
+		while(inorder[idx]!=root.val){
+			idx++;
+		}
+
+		HashSet<Integer> set = new HashSet<>();
+		for(int i=isi;i<idx;i++){
+			set.add(inorder[i]);
+		}
+
+		int[] lofls = new int[idx-isi]; //level order for left subtree
+		int[] lofrs = new int[iei-idx]; //level order for right subtree
+
+		int ls=0,rs=0;
+		
+		for(int i=1;i<levelorder.length;i++){
+			int ele = levelorder[i];
+			if(set.size()!=0 && set.contains(ele)){
+				lofls[ls++]=ele;
+				set.remove(ele);
+			}
+			else{
+				lofrs[rs++]=ele;
+			}
+		}
+		
+		root.left=buildTree1(inorder,isi,iei,lofls);
+		root.right=buildTree1(inorder,idx+1,iei,lofrs);
+
+		return root;
+	}
+
+	public TreeNode buildTree(int[] inorder, int[] levelorder){
+		int n=inorder.length();
+
+		return buildTree1(inorder,0,n-1,levelorder);
+	}
+
+
+
+}

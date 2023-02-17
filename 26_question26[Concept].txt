@@ -1,0 +1,13 @@
+Question: Why only Full binary Tree for the construction of the tree using pre and post order Traversal.
+
+Solution: The concept is that we can only contruct the binary is tree from given pre and post order traversal
+	  when the binary tree is a complete Binary tree. 
+
+e.g.
+                         a
+		      /     \
+		    b         c			pre: a b d e i j c g h
+		  /   \	    /   \	       post: d i j e b g n c a
+		d      e   g      h
+                     /   \	         	We will make the pre[0] root node, then 
+	            i     j      

@@ -1,0 +1,31 @@
+Given two arrays that represent preorder and postorder traversals of a full binary tree, construct the
+ binary tree. Full Binary Tree is a binary tree where every node has either 0 or 2 children.
+
+Solution
+
+class Solution {
+    public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
+        int n = preorder.length;
+        return constructFromPrePost1(preorder, 0,n-1,postorder,0,n-1);
+    }
+     public TreeNode constructFromPrePost1(int[] preorder,int psi,int pei, int[] postorder, int ppsi, int ppei) {
+        if(psi>pei){
+            return null;
+        }
+         
+         TreeNode root = new TreeNode(preorder[psi]);
+         if(psi==pei){
+             return root;
+         }
+         int idx=ppsi;
+         while(postorder[idx]!=preorder[psi+1]){
+             idx++;
+         }
+         int tnel = idx-ppsi+1;
+         
+         root.left=constructFromPrePost1(preorder,psi+1,psi+tnel ,postorder,ppsi,idx );
+         root.right=constructFromPrePost1(preorder, psi+tnel+1,pei ,postorder,idx+1 ,ppei-1 );
+         
+         return root;
+    }
+}
