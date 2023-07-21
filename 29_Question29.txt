@@ -1,0 +1,31 @@
+Question: Construct  a binary search tree from a preOrder traversal.
+	
+		pre[] = {30,20,10,15,25,23,39,35,42}
+
+Solution:
+
+ 		
+
+//The orientation of the our BST is 
+//      all the element's in left subtree <= node.data < all elements in right subtree
+class Solution {
+    public int idx=0; //If you make this static then will not run in the leetcode
+    public TreeNode bstFromPreorder(int[] preorder) {
+        int lr = -(int)1e9-1;
+        int rr = (int)1e9+1;
+        return bstFromPreorder_1(preorder,lr,rr);
+    }
+    public TreeNode bstFromPreorder_1(int[] preorder, int lr, int rr) {
+        if(idx>=preorder.length || preorder[idx]<lr || preorder[idx]>rr){
+            return null;
+        }
+        
+        TreeNode root = new TreeNode(preorder[idx++]); 
+        
+        
+        root.left= bstFromPreorder_1(preorder, lr,root.val);
+        root.right= bstFromPreorder_1(preorder, root.val,rr);
+        
+        return root;
+    }
+}

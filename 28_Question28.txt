@@ -1,0 +1,56 @@
+Question: Contruct a Binary Search Tree from the inorder Traversal.
+
+Solution:  				Array: {9,12,14,17,19,23,50,54,67,72,76}
+						0 1  2  3  4  5  6  7  8  9  10   idx
+
+
+We are given the inorder traversal which is [sorted itself], our range is (0,10). 
+
+Find mid ->  (0+10)/2 = 5  i.e make 23 the node[root coz it is the first time we are doing it.]
+
+Then make the left subtree using from range si,mid-1  i.e. root.left
+And the right subtree using from range mid+1,ei i.e. root.right					starting index(si) and ending index(ei)
+
+By doing this, there will be a time when we get a call like (0,-1). means si and ei has crossed each other means we need to return now.[Position out
+																	 of bound]
+
+
+
+	public static TreeNode contructIn1(int[] inorder, int si, int ei){
+		if(si>ei){
+			return null;
+		}
+
+		int mid = (si+ei)/2;
+
+		TreeNode root = new TreeNode(inorder[mid]);
+
+		root.left = constructIn1(inorder,si,mid-1);
+		root.right = constructIn1(inorder,mid+1,ei);
+
+		return root;
+
+	}
+
+
+	public static TreeNode contructIn(int[] inorder){
+		int n=inorder.length;
+
+		return contructIn1(inorder,0,n-1);
+
+	}
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+

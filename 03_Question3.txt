@@ -2,7 +2,7 @@ Iterative PreOrder, PostOrder, Inorder
 
 Idea behind this:
 we will use the Pair(node,state) technique here, we get a node in the function so will make a pair of it with state 1.
-we will make three empty strings pre="" in="" post="" and a stack<pair> whihc will keep our pairs.
+we will make three empty strings pre="" in="" post="" and a stack<pair> which will keep our pairs.
 now we will initilaze a while loop which will run till the stck is not empty.
 Inside the loop we will check the coditions like
 

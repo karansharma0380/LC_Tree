@@ -1,0 +1,8 @@
+Question: Contruct a Binary Search Tree from a postorder.
+
+	post[] = {15,10,23,25,20,35,42,39,30}
+
+Solution: 
+
+	
+	

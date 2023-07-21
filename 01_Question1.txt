@@ -30,7 +30,7 @@ public class TreePractice {
 	}
 
 
-	static class Pair{	// Pair class to be pushe inside the stack
+	static class Pair{	// Pair class to be push inside the stack
 		Node node;
 		int state;
 		
