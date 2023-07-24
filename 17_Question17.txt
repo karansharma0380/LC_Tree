@@ -2,6 +2,16 @@ PreOrder Morris Traversal[PreOrder Traversal without extra space]
 
 Solution: 
 
+Things to remember in this:-> 
+	1. print :
+		   a. when left child is null then print curr node.
+		   b. as soon as we create thread print curr node.
+	2. is leftTree processed or not?
+	3. When we should move to the right subtree.
+		a. when left subtree is null go the right.
+		b. when we cut down the thread then go to right child.
+
+
 
 public static Node getRightMostNode(Node leftNode,Node curr){
 		while(leftNode.right!=null && leftNode.right!=curr){
@@ -25,7 +35,7 @@ public static Node getRightMostNode(Node leftNode,Node curr){
 				Node rightmostNode = getRightMostNode(LeftNode,curr);
 				
 				if(rightmostNode.right==null){
-					ans.add(curr.data);
+					ans.add(curr.data);  //print statment comes here from the below else statement
 					rightmostNode.right=curr;
 					curr=curr.left;
 				}

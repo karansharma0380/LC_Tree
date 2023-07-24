@@ -5,13 +5,16 @@ Return the minimum number of cameras needed to monitor all nodes of the tree.
 
 Solution: 
 
+We will get solve this question in the postorder, 
+
 
 class Solution {
      int cameras=0;
     private int minCameraCover_(TreeNode root){
    	//-1 -> camera needed (node asks it's parent to cover it)
+	// 0 -> node has been covered (returns status to parent that it has a camera and is already covered)
         // 1 -> camera not needed (node says its covered)
-        // 0 -> node has been covered (returns status to parent that it has a camera and is already covered)
+        
         if(root==null){
             return 1;//null nodes are already covered
         }
