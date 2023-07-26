@@ -14,7 +14,7 @@ Return the longest ZigZag path contained in that tree.
 
 
 
-Solution:
+Solution: we will solve this in postorder. 
 
 Terminologies to be known
                                     Node
@@ -37,7 +37,7 @@ If we are at the node 'a' and we want zig zag path [leave question]
 
 class Solution {
     static class Pair{
-        int forwardslop=-1;
+        int forwardslop=-1;  //Since we are calculating in terms of edges starting will be -1 otherwise, it will be 0(nodes).
         int backwwardslop=-1;
         int maxLen = -1;
     }
@@ -52,9 +52,10 @@ class Solution {
         
         Pair myans = new Pair();
         
+			        //not including the current node in maxlength	//including the current node in the maxlen
         myans.maxLen = Math.max(Math.max(lchild.maxLen,rchild.maxLen),Math.max(lchild.backwwardslop, rchild.forwardslop)+1);
         
-        myans.forwardslop = lchild.backwwardslop+1;
+        myans.forwardslop = lchild.backwardslop+1;
         myans.backwwardslop = rchild.forwardslop+1;
         
         return myans;
