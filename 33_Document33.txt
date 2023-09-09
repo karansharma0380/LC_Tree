@@ -1,0 +1,48 @@
+Ques: Width of Shadow of Binary Tree.
+
+			Bulb
+
+
+		         1  lvl 0 
+		     /       \
+	      -1   2           6   1
+		/    \       /    \
+	  -2   7       9    10      11   2
+            /                         \
+       -3  8                           12   3
+					  \
+					   13  4
+
+    width of shadow :   4 - (-3) +1 = 4+3+1 = 8
+
+Sol: 
+
+This is very simple recursive function. 
+We will create a array of size 2 called ans, [minVal,maxVal] and we will create a utility function
+which will take root, horizontal lvl(hl), ans as input.
+
+When we are going to the right side we will add 1 to hl and when we are going to left side we will 
+substract 1 to hl. 
+
+We will change the value inside ans[0],ans[1]. 
+
+After whole process we will have the minVal and maxVal inside the ans[]. 
+
+Then return ans[1]-ans[0]+1 
+
+public static void width(TreeNode root, int hl, int[] ans){
+	if(root==null)
+		return;
+
+	ans[0] = Math.min(hl,ans[0]);
+	ans[1] = Math.max(hl,ans[1]);
+
+	width(root,hl-1,ans);
+	width(root,hl+1,ans);
+}
+
+public static int width(TreeNode root){
+	int[] ans = new int[2];
+	width(root,0,ans);
+	return ans[1]-ans[0]+1;
+ }

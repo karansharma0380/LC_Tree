@@ -1,0 +1,57 @@
+Ques: Vertical order of the Binary Tree
+ 
+		3(0,0)
+	      /   \
+      (1,-1) 9     20(1,1)
+	         /    \
+	 (2,0) 15      7(2,2)
+
+Sol: 
+class Solution {
+    static class vPair{
+        TreeNode nd;
+        int lvl;
+        vPair(TreeNode nd){
+            this.nd=nd;
+        }
+        vPair(TreeNode nd,int lvl){
+            this.nd=nd;
+            this.lvl=lvl;
+        }
+    }
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        Queue<vPair> q = new LinkedList<>();
+        HashMap<Integer,List<Integer>> map=new HashMap<>();
+        int maxhl=0,minhl=0;
+        
+        List<List<Integer>> ans = new ArrayList<>();
+        
+        while(q.isEmpty()!=false){
+            int size=q.size();
+            
+            while(size-->0){
+                vPair tp = q.remove();
+                
+                maxhl = Math.max(maxhl,tp.lvl);
+                minhl= Math.min(minhl,tp.lvl);
+                
+                map.putIfAbsent(tp.lvl,new ArrayList<>());
+                map.get(tp.lvl).add(tp.nd.val);
+                
+                if(tp.nd.left!=null){
+                    q.add(new vPair(tp.nd.left,tp.lvl-1));
+                }
+                if(tp.nd.right!=null){
+                    q.add(new vPair(tp.nd.right,tp.lvl+1));
+                }
+            }
+        }
+        
+        for(int i=minhl;i<=maxhl;i++){
+            ans.add(map.get(i));
+        }
+        
+        return ans;
+        
+    }
+

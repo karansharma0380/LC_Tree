@@ -1,0 +1,7 @@
+Ques: Vertical order of the Binary Tree [Method 2 used in many questions]
+
+
+
+Sol: This solution is based on the width of Binary Tree.   
+
+Step1:   
