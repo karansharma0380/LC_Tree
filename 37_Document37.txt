@@ -1,0 +1,41 @@
+Ques: Print all diagonal elements in a binary tree that belong to the same line, given a binary tree.
+
+                       20
+                     /    \
+                   8       22
+                 /   \        \
+                5     3        25
+                    /   \      
+                  10     14
+
+output:     [20,22,25,8,3,14,5,10]
+
+Sol: We are at root node and we will do the BFS traversal on our tree. Make a queue to store the node.
+
+ public int[] solve(TreeNode A) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        
+        Queue<TreeNode> q = new LinkedList<>(); //Make a queue for the TreeNode.
+        q.add(A); // Add the root to the queue.
+
+        while(q.isEmpty()==false){  //  Applying simple bfs to it. 
+            
+            for(int i=0;i<q.size();i++){
+                TreeNode rn = q.remove(); //Get the first element from the queue.
+                
+                while(rn!=null){         // Travel from the node the right direction(diagnolly) and  
+                    ans.add(rn.val);     // everytime you reach a node add it's left node to the queue. 
+                    if(rn.left!=null){  // and go to the right node. 
+                        q.add(rn.left);
+                    }
+                    rn=rn.right;
+                }    
+            }
+        }
+        
+        int[] ant = new int[ans.size()];
+        for(int i =0;i<ans.size();i++){
+            ant[i]=ans.get(i);
+        }
+        
+        return ant; 

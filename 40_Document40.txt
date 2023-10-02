@@ -1,0 +1,79 @@
+Ques: Vetical Sum of a Binary Tree.
+      You are given the root of a binary tree A. You have to find the vertical sum of the tree.
+      A vertical sum denotes an array of sum of the different verticals of a binary tree, where the 
+      leftmost vertical sum is the first element of the array and rightmost vertical is the last.
+
+			  1
+     		        /   \
+   		       2     3
+   		      / \   / \
+                     4   5 6   7
+
+             [4, 2, 12, 3, 7]
+
+Sol: 
+
+    Simple Vertical order of a Tree Question. 
+
+
+public class Solution {
+    
+    public static class Pair{
+        TreeNode node;
+        int val;
+        
+        Pair( TreeNode node,int val){
+            this.node=node;
+            this.val=val;
+        }
+    }
+    
+    public void width(TreeNode node, int[] ans,int hl){
+        if(node==null){
+            return;
+        }
+        ans[0] = Math.min(ans[0],hl);
+        ans[1] = Math.max(ans[1],hl);
+        
+        width(node.left,ans,hl-1);
+        width(node.right,ans,hl+1);
+    }
+    public int[] verticalSum(TreeNode A) {
+       
+        int[] minmnax = new int[2];
+        width(A,minmnax,0);
+        int wlen = minmnax[1]-minmnax[0]+1;
+      
+	int[] finalans = new int[wlen];
+        
+        for(int i=0;i<wlen;i++){
+            finalans[i]=0;
+        }
+        
+        
+        Queue<Pair> q=new LinkedList<>();
+        q.add(new Pair(A,Math.abs(minmnax[0])));
+        
+        while(q.isEmpty()==false){
+            for(int i=0;i<q.size();i++){
+                Pair tp = q.remove();
+                
+                TreeNode tn = tp.node;
+                int thl = tp.val;
+                
+                finalans[thl] += tn.val;
+                
+                
+                if(tn.left!=null){
+                    q.add(new Pair(tn.left,thl-1));
+                }
+                if(tn.right!=null){
+                    q.add(new Pair(tn.right,thl+1));
+                }
+            }
+        }
+        
+             
+        return finalans;
+    }
+}

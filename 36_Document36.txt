@@ -1,5 +1,6 @@
-Ques: Given a Binary Tree, The task is to print the bottom view from left to right.
+Ques: Given a Binary Tree, The task is to print the top view from left to right.
 
+		       Eye
 
 Input:                 20
                     /     \
@@ -9,9 +10,9 @@ Input:                 20
                      /   \      
                    10     14
 
-	              Eye
+	      
 
-Output: 5, 10, 3, 14, 25. 
+Output: 5, 8, 20, 22, 25. 
 
 Solution:     This is just a variation of Vertical order of binary tree. 
  	If we consider the vertical order of the tree
@@ -21,15 +22,15 @@ Solution:     This is just a variation of Vertical order of binary tree.
    			2 -> 20,3
 			3 -> 22,14
 			4 -> 25
-	If we see the last element of our lists we get 5,10,3,14,25. So, our idea is to only print last 
+	If we see the first element of our lists we get 5,8,20,22,25. So, our idea is to only print first 
 	element of every list.
-	so instead of making list<list<Integer>> we will make list<Integer> we will not add elements, we 
+	So, instead of making list<list<Integer>> we will make list<Integer> we will not add elements, we 
 	will just update the element. 
 	
 	so we will get      0 -> 5
-			    1 -> 10
-			    2 -> 3
-			    3 -> 14
+			    1 -> 8
+			    2 -> 20
+			    3 -> 22
 			    4 -> 25
 
 	class Solution{
@@ -68,7 +69,8 @@ Solution:     This is just a variation of Vertical order of binary tree.
 			int len = minmax[1]-minmax[0]+1;
 
 			for(int i=0;i<len;i++){
-				ans.add(0);	
+				ans.add(null);  // This was 0 for the bottom view coz we are only doing setting.
+						// Here we are going null coz we only want first value. 	
 			}
 
 			Queue<Pair> q = new LinkedList<>();
@@ -83,7 +85,9 @@ Solution:     This is just a variation of Vertical order of binary tree.
 					TreeNode node = rem.node;
 					int hl = rem.hl;
 
-					ans.set(hl,node.val); //We will change the value everytime
+					if(ans.get(hl)==null){   //We will only add for the first time.
+						ans.set(hl,node.val);
+					}
 
 					if(node.right!=null){
 						q.add(new Pair(node.right,hl+1));

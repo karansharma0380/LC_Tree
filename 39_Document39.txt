@@ -1,0 +1,39 @@
+Ques: Diagnol Order but in an anticlock way.
+
+                   1                    1
+                 /   \                /   \
+               2      3              5      3
+                     /              /
+                    4              4
+
+	ans:[[1,2],[3,4]]           ans:[[1,5,4],[3]]
+
+Solution:
+           We will use simple BFS technique, 
+
+
+
+
+	public int[] vertOrd(TreeNode node){
+		ArrayList<Integer> ans = new ArrayList<>();
+
+		Queue<TreeNode> q = new LinkedList<>();
+		q.add(node);
+
+		while(q.isEmpty()){
+			
+			for(int i=0;i<q.size();i++){
+				TreeNode ln = q.remove();
+				
+				while(ln!=null){
+					ans.add(ln.val);
+					if(ln.right!=null){
+					      q.add(ln.right);
+					}
+					ln=ln.left;
+				}	
+				
+			}
+		}
+
+	}
